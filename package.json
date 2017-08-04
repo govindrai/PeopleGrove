@@ -1,0 +1,21 @@
+{
+  "name": "peoplegrove",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Coding challenge for PeopleGrove--mini todos webapp",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js"
+  },
+  "keywords": [],
+  "author": "Govind Rai",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.1.1"
+  },
+  "devDependencies": {
+    "concurrently": "^3.5.0"
+  }
+}
