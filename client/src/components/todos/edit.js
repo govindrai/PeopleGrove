@@ -5,7 +5,6 @@ export default class New extends Component {
     super(props);
 
     this.state = {
-      user: {},
       name: "",
       duration: ""
     };
@@ -15,16 +14,19 @@ export default class New extends Component {
   }
 
   componentDidMount() {
-    fetch("/api/todos/userInfo", { credentials: "include" })
+    const { id } = this.props.match.params;
+    fetch(`/api/todos/edit/${id}`, { credentials: "include" })
       .then(res => res.json())
-      .then(user => this.setState({ user }));
+      .then(({ name, duration }) => this.setState({ name, duration }));
   }
 
   onSubmitHandler(event) {
     event.preventDefault();
     const { name, duration } = this.state;
-    fetch("/api/todos", {
-      method: "post",
+    const { id } = this.props.match.params;
+    console.log(name, duration);
+    fetch(`/api/todos/edit/${id}`, {
+      method: "put",
       headers: new Headers({
         "Content-Type": "application/json",
         Accept: "application/json"
@@ -45,9 +47,6 @@ export default class New extends Component {
   render() {
     return (
       <form onSubmit={this.onSubmitHandler}>
-        <h1>
-          {this.state.user.email}
-        </h1>
         <label>Name of Activity: </label>
         <input
           name="name"
@@ -62,7 +61,7 @@ export default class New extends Component {
           type="text"
           value={this.state.duration}
         />
-        <input type="submit" value="Track Time" />
+        <input type="submit" value="Edit Activity" />
       </form>
     );
   }

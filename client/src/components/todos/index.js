@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class Home extends Component {
   constructor(props) {
@@ -16,16 +17,37 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <h1>Todos</h1>
-        <ul>
-          {this.state.todos.map(todo => {
-            return (
-              <li key={todo._id}>
-                {todo.name}
-              </li>
-            );
-          })}
-        </ul>
+        <h1>PeopleGrove Time Tracker</h1>
+        <Link to="/new">Track Task</Link>
+        <table>
+          <thead>
+            <tr>
+              <td>Task Name</td>
+              <td>Time Spent</td>
+              <td>Task Created</td>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.todos.map(todo => {
+              return (
+                <tr key={todo._id}>
+                  <td>
+                    {todo.name}
+                  </td>
+                  <td>
+                    {todo.duration}
+                  </td>
+                  <td>
+                    {todo.createdAt}
+                  </td>
+                  <td>
+                    <Link to={`/todos/edit/${todo._id}`}>Edit</Link>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     );
   }
