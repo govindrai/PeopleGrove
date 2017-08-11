@@ -4,11 +4,9 @@ const express = require("express"),
 const Todo = require("../models/Todo");
 
 router.get("/", (req, res) => {
-  console.log(req.user);
   const { date: lowerBound } = req.query;
   const upperBound = new Date(lowerBound);
   upperBound.setDate(upperBound.getDate() + 1);
-  console.log(lowerBound, upperBound);
   if (req.user) {
     Todo.find()
       .where("createdAt")
