@@ -1,6 +1,5 @@
 const express = require("express"),
   passport = require("passport"),
-  cors = require("cors"),
   router = express.Router();
 
 router.get("/login", (req, res) => {
