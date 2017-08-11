@@ -7,8 +7,9 @@
   "scripts": {
     "server": "nodemon index.js",
     "client": "npm run start --prefix client",
-    "redis": "/Users/raigovind93/redis-3.2.9/src/redis-server",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "build": "npm run build --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "Govind Rai",
