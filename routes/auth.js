@@ -2,12 +2,6 @@ const express = require("express"),
   passport = require("passport"),
   router = express.Router();
 
-router.get("/login", (req, res) => {
-  res.send(
-    '<h1>YOU DONE GOOFED!</h1><a href="/auth/facebook">Login with Facebook</a>'
-  );
-});
-
 // Redirect the user to Facebook for authentication. When complete,
 // Facebook will redirect the user back to the application at
 // /auth/facebook/callback

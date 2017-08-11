@@ -6,8 +6,9 @@ export default props => {
     <div>
       <h1>PeopleGrove Task Tracker</h1>
       <button
+        type="submit"
         name={nameAttribute}
-        onClick={(proxy, event) => props.onClickHandler(event, props.history)}
+        onClick={() => props.onClickHandler(props.history)}
       >
         {nameAttribute}
       </button>

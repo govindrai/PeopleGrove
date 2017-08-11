@@ -23,8 +23,7 @@ class App extends Component {
       .catch(e => console.log("User not logged in"));
   }
 
-  onClickHandler(event, history) {
-    event.preventDefault();
+  onClickHandler(history) {
     switch (this.state.loggedIn) {
       case false:
         fetch("/auth/facebook", { credentials: "include", mode: "no-cors" })
@@ -41,7 +40,7 @@ class App extends Component {
         });
         break;
       default:
-        console.log("what are you tryiing to do?");
+        console.log("what are you trying to do?");
     }
   }
 
