@@ -4,14 +4,28 @@ const express = require("express"),
 const Todo = require("../models/Todo");
 
 router.get("/", (req, res) => {
-  Todo.find()
-    .then(todos => {
-      res.json(todos);
-    })
-    .catch(e => console.log(e));
+  console.log(req.user);
+  const { date: lowerBound } = req.query;
+  const upperBound = new Date(lowerBound);
+  upperBound.setDate(upperBound.getDate() + 1);
+  console.log(lowerBound, upperBound);
+  if (req.user) {
+    Todo.find()
+      .where("createdAt")
+      .gt(lowerBound)
+      .lt(upperBound)
+      .then(todos => {
+        res.json(todos);
+      })
+      .catch(e => console.log(e));
+  } else {
+    res.send([]);
+  }
 });
 
 router.get("/userInfo", (req, res) => {
+  console.log("made it into userInfo");
+  console.log(req.user);
   res.json(req.user);
 });
 

@@ -1,5 +1,6 @@
 const express = require("express"),
   passport = require("passport"),
+  cors = require("cors"),
   router = express.Router();
 
 router.get("/login", (req, res) => {
@@ -29,5 +30,10 @@ router.get(
     failureRedirect: "/login"
   })
 );
+
+router.get("/logout", function(req, res) {
+  req.session = null;
+  res.send("");
+});
 
 module.exports = router;

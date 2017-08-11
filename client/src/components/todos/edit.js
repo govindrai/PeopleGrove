@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class New extends Component {
+export default class TodosEdit extends Component {
   constructor(props) {
     super(props);
 
