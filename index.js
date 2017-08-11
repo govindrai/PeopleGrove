@@ -26,10 +26,6 @@ app.use(passport.session());
 app.use("/api/todos", todos);
 app.use("/auth", auth);
 
-app.get("/", (req, res) => {
-  res.json({ status: 200 });
-});
-
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
   const path = require("path");
