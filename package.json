@@ -12,7 +12,7 @@
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "Govind Rai",
+  "author": "Govind Rai & Vilde Vevatne",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.17.2",
