@@ -4,7 +4,7 @@
   "private": true,
   "description": "Coding challenge for PeopleGrove--mini todos webapp",
   "main": "index.js",
-  "engine": {
+  "engines": {
     "node": "8.1.1",
     "npm": "5.0.3"
   },
