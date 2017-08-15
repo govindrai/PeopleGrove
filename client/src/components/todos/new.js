@@ -14,12 +14,6 @@ export default class TodosNew extends Component {
     this.onSubmitHandler = this.onSubmitHandler.bind(this);
   }
 
-  componentDidMount() {
-    fetch("/api/todos/userInfo", { credentials: "include" })
-      .then(res => res.json())
-      .then(user => this.setState({ user }));
-  }
-
   onSubmitHandler(event) {
     event.preventDefault();
     const { name, duration } = this.state;

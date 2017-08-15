@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header";
 import TodosIndex from "./components/todos/index";
@@ -23,29 +23,23 @@ class App extends Component {
 
   componentDidMount() {
     fetch("/auth/userInfo", { credentials: "include" })
-      .then(res => {
-        if (res.status === 200) {
-          return res.json();
-        } else {
-          console.log(res.status);
-          throw "user is not logged in";
+      .then(res => res.json())
+      .then(user => {
+        if (user.email) {
+          this.setState({ user, admin: user.admin, loggedIn: true });
         }
       })
-      .then(user => this.setState({ user, admin: user.admin, loggedIn: true }))
       .catch(e => console.log(e));
   }
 
   handleAuth(newState) {
-    console.log("handleAuth was just called");
-    console.log("here is the new state", newState);
     this.setState({ ...newState });
   }
 
   render() {
     console.log("App is rerendering");
-    console.log("here is the new state:", this.state);
     return (
-      <BrowserRouter>
+      <Router>
         <div>
           <Route
             path="/"
@@ -56,19 +50,22 @@ class App extends Component {
                 {...this.state}
               />}
           />
-          <Route
-            exact
-            path="/"
-            component={props => <TodosIndex {...props} {...this.state} />}
-          />
-          <Route path="/todos/new" component={TodosNew} />
-          <Route path="/todos/edit/:id" component={TodosEdit} />
-          <Route
-            path="/admin"
-            component={props => <Admin {...props} {...this.state} />}
-          />
+          <Switch>
+            <Route
+              exact
+              path="/"
+              component={props => <TodosIndex {...props} {...this.state} />}
+            />
+            <Route path="/todos/new" component={TodosNew} />
+            <Route path="/todos/edit/:id" component={TodosEdit} />
+            <Route
+              path="/admin"
+              component={props => <Admin {...props} {...this.state} />}
+            />
+            <Route component={() => <div>SORRY No PAGE with that url</div>} />
+          </Switch>
         </div>
-      </BrowserRouter>
+      </Router>
     );
   }
 }

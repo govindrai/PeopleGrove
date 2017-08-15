@@ -52,7 +52,7 @@ router.get("/userInfo", (req, res) => {
     const { email, admin } = req.user;
     res.json({ email, admin });
   } else {
-    res.send(401);
+    res.json({});
   }
 });
 

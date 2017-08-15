@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
   const upperBound = new Date(lowerBound);
   upperBound.setDate(upperBound.getDate() + 1);
   if (req.user) {
-    Todo.find()
+    Todo.find({ user: req.user._id })
       .where("createdAt")
       .gt(lowerBound)
       .lt(upperBound)

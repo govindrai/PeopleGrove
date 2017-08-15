@@ -5,10 +5,8 @@ export default class Header extends Component {
     const location = this.props.history.location.pathname;
     let authSection;
     if (location === "/admin") {
-      if (!this.props.loggedIn || !this.props.isAdmin) {
-        authSection = (
-          <AdminLoginForm adminLoginHandler={this.props.adminLoginHandler} />
-        );
+      if (!this.props.loggedIn || !this.props.admin) {
+        authSection = <AdminLoginForm {...this.props} />;
       } else {
         authSection = <button>Admin Logout Button (non functional)</button>;
       }
@@ -60,7 +58,7 @@ class AdminLoginForm extends Component {
           .then(res => res.json())
           .then(user => {
             if (user.admin) {
-              this.props.authHandler({ user, loggedIn: true, isAdmin: true });
+              this.props.authHandler({ user, loggedIn: true, admin: true });
               return this.history.push("/admin");
             } else {
               this.setState({ adminSigninError: "Incorrect email/password" });
@@ -113,7 +111,6 @@ class FacebookAuthButton extends Component {
   }
 
   handleFacebookAuth() {
-    console.log("MADE IT HERE");
     switch (this.props.loggedIn) {
       case true:
         logoutUser(this.props);
