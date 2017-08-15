@@ -51,9 +51,8 @@ router.post("/admin", (req, res, next) => {
 });
 
 router.get("/userInfo", (req, res) => {
-  console.log("userInfo just got hit!");
-  console.log("req.user: ", req.user);
-  res.json(req.user);
+  const { email, admin } = req.user;
+  res.json({ email, admin });
 });
 
 router.get("/createAdmin", (req, res) => {
