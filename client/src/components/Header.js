@@ -122,8 +122,6 @@ class FacebookAuthButton extends Component {
           })
           .then(user => {
             this.props.authHandler({ loggedIn: true, user, admin: false });
-            // console.log(this.props.history);
-            // return this.props.history.push("/");
           })
           .catch(e => console.log(e));
     }

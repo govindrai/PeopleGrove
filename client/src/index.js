@@ -56,8 +56,14 @@ class App extends Component {
               path="/"
               component={props => <TodosIndex {...props} {...this.state} />}
             />
-            <Route path="/todos/new" component={TodosNew} />
-            <Route path="/todos/edit/:id" component={TodosEdit} />
+            <Route
+              path="/todos/new"
+              component={props => <TodosNew {...props} {...this.state} />}
+            />
+            <Route
+              path="/todos/edit/:id"
+              component={props => <TodosEdit {...props} {...this.state} />}
+            />
             <Route
               path="/admin"
               component={props => <Admin {...props} {...this.state} />}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import NotFound from "../NotFound";
 
 export default class TodosEdit extends Component {
   constructor(props) {
@@ -45,6 +46,9 @@ export default class TodosEdit extends Component {
   }
 
   render() {
+    if (!this.props.loggedIn) {
+      return <NotFound />;
+    }
     return (
       <form onSubmit={this.onSubmitHandler}>
         <label>Name of Activity: </label>
