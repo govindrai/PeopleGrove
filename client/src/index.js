@@ -14,11 +14,10 @@ class App extends Component {
 
     this.state = {
       loggedIn: false,
-      user: null,
-      isAdmin: false
+      user: null
     };
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleFacebookAuth = this.handleFacebookAuth.bind(this);
     this.loginAdmin = this.loginAdmin.bind(this);
   }
 
@@ -29,17 +28,8 @@ class App extends Component {
       .catch(e => console.log(e));
   }
 
-  handleClick(history) {
+  handleFacebookAuth(history) {
     switch (this.state.loggedIn) {
-      case false:
-        fetch("/auth/facebook", { credentials: "include", mode: "no-cors" })
-          .then(res => res.json())
-          .then(user => {
-            this.setState({ loggedIn: true, user });
-            history.push("/");
-          })
-          .catch(e => console.log(e));
-        break;
       case true:
         fetch("/auth/logout", { credentials: "include" }).then(() => {
           this.setState({ loggedIn: false });
@@ -47,12 +37,14 @@ class App extends Component {
         });
         break;
       default:
-        console.log("what are you trying to do?");
+        fetch("/auth/facebook", { credentials: "include", mode: "no-cors" })
+          .then(res => res.json())
+          .then(user => {
+            this.setState({ loggedIn: true, user });
+            history.push("/");
+          })
+          .catch(e => console.log(e));
     }
-  }
-
-  loginAdmin(user) {
-    this.setState({ adminLoggedIn: true, user });
   }
 
   render() {
@@ -64,16 +56,14 @@ class App extends Component {
             component={props =>
               <Header
                 {...props}
-                adminLoginHandler={this.loginAdmin}
-                onClickHandler={this.handleClick}
+                facebookAuthHandler={this.handleFacebookAuth}
                 {...this.state}
               />}
           />
           <Route
             exact
             path="/"
-            component={props =>
-              <TodosIndex {...props} loggedIn={this.state.loggedIn} />}
+            component={props => <TodosIndex {...props} {...this.state} />}
           />
           <Route path="/todos/new" component={TodosNew} />
           <Route path="/todos/edit/:id" component={TodosEdit} />
