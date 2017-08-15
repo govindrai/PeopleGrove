@@ -1,5 +1,6 @@
 const express = require("express"),
   bodyParser = require("body-parser"),
+  flash = require("connect-flash"),
   passport = require("passport"),
   cookieSession = require("cookie-session");
 

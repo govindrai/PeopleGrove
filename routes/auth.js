@@ -1,6 +1,7 @@
 const express = require("express"),
   passport = require("passport"),
-  router = express.Router();
+  router = express.Router(),
+  User = require("../models/User");
 
 // Redirect the user to Facebook for authentication. When complete,
 // Facebook will redirect the user back to the application at
@@ -20,13 +21,50 @@ router.get(
   "/facebook/callback",
   passport.authenticate("facebook", {
     successRedirect: "/",
-    failureRedirect: "/login"
-  })
+    failureRedirect: "/"
+  }),
+  (req, res) => {
+    res.send(req.user);
+  }
 );
 
 router.get("/logout", function(req, res) {
   req.session = null;
   res.send("");
+});
+
+router.post("/admin", (req, res, next) => {
+  passport.authenticate("local", function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      return res.json({});
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      return res.json(user);
+    });
+  })(req, res, next);
+});
+
+router.get("/userInfo", (req, res) => {
+  console.log("userInfo just got hit!");
+  console.log("req.user: ", req.user);
+  res.json(req.user);
+});
+
+router.get("/createAdmin", (req, res) => {
+  User.create({
+    name: "Adam Saven",
+    email: "adam@peoplegrove.com",
+    password: "peoplegrove",
+    admin: true
+  })
+    .then(user => res.json(user))
+    .catch(e => res.json(e));
 });
 
 module.exports = router;

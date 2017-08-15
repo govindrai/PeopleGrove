@@ -6,29 +6,36 @@ import Header from "./components/Header";
 import TodosIndex from "./components/todos/index";
 import TodosNew from "./components/todos/new";
 import TodosEdit from "./components/todos/edit";
+import Admin from "./components/Admin";
 
 class App extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      loggedIn: false
+      loggedIn: false,
+      user: null,
+      isAdmin: false
     };
-    this.onClickHandler = this.onClickHandler.bind(this);
+
+    this.handleClick = this.handleClick.bind(this);
+    this.loginAdmin = this.loginAdmin.bind(this);
   }
 
   componentDidMount() {
-    fetch("/api/todos/UserInfo", { credentials: "include" })
+    fetch("/auth/userInfo", { credentials: "include" })
       .then(res => res.json())
-      .then(user => this.setState({ loggedIn: true }))
-      .catch(e => console.log("User not logged in"));
+      .then(user => this.setState({ loggedIn: true, user }))
+      .catch(e => console.log(e));
   }
 
-  onClickHandler(history) {
+  handleClick(history) {
     switch (this.state.loggedIn) {
       case false:
         fetch("/auth/facebook", { credentials: "include", mode: "no-cors" })
-          .then(() => {
-            this.setState({ loggedIn: true });
+          .then(res => res.json())
+          .then(user => {
+            this.setState({ loggedIn: true, user });
             history.push("/");
           })
           .catch(e => console.log(e));
@@ -44,6 +51,10 @@ class App extends Component {
     }
   }
 
+  loginAdmin(user) {
+    this.setState({ adminLoggedIn: true, user });
+  }
+
   render() {
     return (
       <BrowserRouter>
@@ -53,17 +64,22 @@ class App extends Component {
             component={props =>
               <Header
                 {...props}
-                onClickHandler={this.onClickHandler}
-                loggedIn={this.state.loggedIn}
+                adminLoginHandler={this.loginAdmin}
+                onClickHandler={this.handleClick}
+                {...this.state}
               />}
           />
-          <Route path="/todos/new" component={TodosNew} />
-          <Route path="/todos/edit/:id" component={TodosEdit} />
           <Route
             exact
             path="/"
             component={props =>
               <TodosIndex {...props} loggedIn={this.state.loggedIn} />}
+          />
+          <Route path="/todos/new" component={TodosNew} />
+          <Route path="/todos/edit/:id" component={TodosEdit} />
+          <Route
+            path="/admin"
+            component={props => <Admin {...props} {...this.state} />}
           />
         </div>
       </BrowserRouter>

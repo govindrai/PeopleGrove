@@ -21,10 +21,6 @@ router.get("/", (req, res) => {
   }
 });
 
-router.get("/userInfo", (req, res) => {
-  res.json(req.user);
-});
-
 router.get("/edit/:id", (req, res) => {
   Todo.findById(req.params.id)
     .then(todo => {
