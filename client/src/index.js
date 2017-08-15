@@ -13,41 +13,37 @@ class App extends Component {
     super(props);
 
     this.state = {
-      loggedIn: false,
-      user: null
+      user: null,
+      admin: false,
+      loggedIn: false
     };
 
-    this.handleFacebookAuth = this.handleFacebookAuth.bind(this);
-    this.loginAdmin = this.loginAdmin.bind(this);
+    this.handleAuth = this.handleAuth.bind(this);
   }
 
   componentDidMount() {
     fetch("/auth/userInfo", { credentials: "include" })
-      .then(res => res.json())
-      .then(user => this.setState({ loggedIn: true, user }))
+      .then(res => {
+        if (res.status === 200) {
+          return res.json();
+        } else {
+          console.log(res.status);
+          throw "user is not logged in";
+        }
+      })
+      .then(user => this.setState({ user, admin: user.admin, loggedIn: true }))
       .catch(e => console.log(e));
   }
 
-  handleFacebookAuth(history) {
-    switch (this.state.loggedIn) {
-      case true:
-        fetch("/auth/logout", { credentials: "include" }).then(() => {
-          this.setState({ loggedIn: false });
-          history.push("/");
-        });
-        break;
-      default:
-        fetch("/auth/facebook", { credentials: "include", mode: "no-cors" })
-          .then(res => res.json())
-          .then(user => {
-            this.setState({ loggedIn: true, user });
-            history.push("/");
-          })
-          .catch(e => console.log(e));
-    }
+  handleAuth(newState) {
+    console.log("handleAuth was just called");
+    console.log("here is the new state", newState);
+    this.setState({ ...newState });
   }
 
   render() {
+    console.log("App is rerendering");
+    console.log("here is the new state:", this.state);
     return (
       <BrowserRouter>
         <div>
@@ -56,7 +52,7 @@ class App extends Component {
             component={props =>
               <Header
                 {...props}
-                facebookAuthHandler={this.handleFacebookAuth}
+                authHandler={this.handleAuth}
                 {...this.state}
               />}
           />

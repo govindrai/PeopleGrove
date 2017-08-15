@@ -19,12 +19,9 @@ router.get(
 // authentication has failed.
 router.get(
   "/facebook/callback",
-  passport.authenticate("facebook", {
-    successRedirect: "/",
-    failureRedirect: "/"
-  }),
+  passport.authenticate("facebook"),
   (req, res) => {
-    res.send(req.user);
+    res.json(req.user);
   }
 );
 
@@ -51,8 +48,12 @@ router.post("/admin", (req, res, next) => {
 });
 
 router.get("/userInfo", (req, res) => {
-  const { email, admin } = req.user;
-  res.json({ email, admin });
+  if (req.user) {
+    const { email, admin } = req.user;
+    res.json({ email, admin });
+  } else {
+    res.send(401);
+  }
 });
 
 router.get("/createAdmin", (req, res) => {

@@ -1,38 +1,19 @@
 import React, { Component } from "react";
 
 export default class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: props.user,
-      adminLoggedIn: props.adminLoggedIn
-    };
-  }
-
-  componentDidMount() {
-    fetch("/auth/userInfo", { credentials: "include" })
-      .then(res => res.json())
-      .then(user => this.setState({ adminLoggedIn: true, user }))
-      .catch(e => console.log(e));
-  }
-
   render() {
+    const location = this.props.history.location.pathname;
     let authSection;
-    if (this.props.history.location.pathname === "/admin") {
-      if (!this.state.adminLoggedIn) {
+    if (location === "/admin") {
+      if (!this.props.loggedIn || !this.props.isAdmin) {
         authSection = (
           <AdminLoginForm adminLoginHandler={this.props.adminLoginHandler} />
         );
+      } else {
+        authSection = <button>Admin Logout Button (non functional)</button>;
       }
     } else {
-      authSection = (
-        <button
-          type="submit"
-          onClick={() => this.props.onClickHandler(this.props.history)}
-        >
-          {this.props.loggedIn ? "Logout" : "Login with Facebook"}
-        </button>
-      );
+      authSection = <FacebookAuthButton {...this.props} />;
     }
 
     return (
@@ -62,68 +43,109 @@ class AdminLoginForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { email, password } = this.state;
-    fetch("/auth/admin", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
-    })
-      .then(res => res.json())
-      .then(user => {
-        if (user.admin) {
-          this.props.adminLoginHandler();
-        } else {
-          this.setState({ adminSigninError: "Incorrect email/password" });
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
+    switch (this.props.loggedIn) {
+      case true:
+        logoutUser(this.props);
+        break;
+      default:
+        const { email, password } = this.state;
+        fetch("/auth/admin", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        })
+          .then(res => res.json())
+          .then(user => {
+            if (user.admin) {
+              this.props.authHandler({ user, loggedIn: true, isAdmin: true });
+              return this.history.push("/admin");
+            } else {
+              this.setState({ adminSigninError: "Incorrect email/password" });
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          });
+        return;
+    }
   }
 
   render() {
-    if (!this.state.adminLoggedIn) {
-      return (
-        <form onSubmit={this.handleSubmit} action="/auth/admin" method="post">
-          <h1>Admin Login</h1>
-          <div>
-            <h3>
-              {this.state.adminSigninError}
-            </h3>
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={this.state.email}
-              onChange={this.handleFieldChange}
-            />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input
-              type="password"
-              name="password"
-              value={this.state.password}
-              onChange={this.handleFieldChange}
-            />
-          </div>
-          <div>
-            <input type="submit" value="Log In" />
-          </div>
-        </form>
-      );
-    } else {
-      return (
+    return (
+      <form onSubmit={this.handleSubmit} action="/auth/admin" method="post">
+        <h1>Admin Login</h1>
         <div>
-          <h1>I WILL NOW DISPLAY ALL YO POSTS!</h1>
           <h3>
-            {JSON.stringify(this.state.user)}
+            {this.state.adminSigninError}
           </h3>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={this.state.email}
+            onChange={this.handleFieldChange}
+          />
         </div>
-      );
+        <div>
+          <label>Password:</label>
+          <input
+            type="password"
+            name="password"
+            value={this.state.password}
+            onChange={this.handleFieldChange}
+          />
+        </div>
+        <div>
+          <input type="submit" value="Log In" />
+        </div>
+      </form>
+    );
+  }
+}
+
+class FacebookAuthButton extends Component {
+  constructor(props) {
+    super(props);
+    this.handleFacebookAuth = this.handleFacebookAuth.bind(this);
+  }
+
+  handleFacebookAuth() {
+    console.log("MADE IT HERE");
+    switch (this.props.loggedIn) {
+      case true:
+        logoutUser(this.props);
+        break;
+      default:
+        fetch("/auth/facebook", { credentials: "include", mode: "no-cors" })
+          .then(res => {
+            return res.json();
+          })
+          .then(user => {
+            this.props.authHandler({ loggedIn: true, user, admin: false });
+            // console.log(this.props.history);
+            // return this.props.history.push("/");
+          })
+          .catch(e => console.log(e));
     }
   }
+
+  render() {
+    return (
+      <button type="submit" onClick={this.handleFacebookAuth}>
+        {this.props.loggedIn ? "Logout" : "Login with Facebook"}
+      </button>
+    );
+  }
+}
+
+// Private Functions
+
+function logoutUser(props) {
+  fetch("/auth/logout", { credentials: "include" }).then(() => {
+    props.authHandler({ user: null, admin: false, loggedIn: false });
+    return props.history.push("/");
+  });
 }

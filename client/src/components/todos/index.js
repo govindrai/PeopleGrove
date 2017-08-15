@@ -18,7 +18,11 @@ export default class TodosIndex extends Component {
   }
 
   componentDidMount() {
-    this.fetchTodos(this.state.date);
+    console.log("Index says loggedin ?", this.props.loggedIn);
+    if (this.props.loggedIn) {
+      console.log("loggedIn so fetching Todos");
+      this.fetchTodos(this.state.date);
+    }
   }
 
   fetchTodos(date) {
@@ -46,6 +50,7 @@ export default class TodosIndex extends Component {
   }
 
   render() {
+    console.log("inside index is user loggedIn?", this.props.loggedIn);
     if (this.props.loggedIn) {
       return (
         <div>
