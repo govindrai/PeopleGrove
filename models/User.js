@@ -28,7 +28,8 @@ const userSchema = new mongoose.Schema({
     type: String,
     minlength: 8,
     maxlength: 128,
-    required: true
+    required: true,
+    default: "nopassword"
   }
 });
 
