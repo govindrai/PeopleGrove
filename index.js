@@ -11,8 +11,7 @@ const auth = require("./routes/auth");
 
 const app = express();
 
-// app.set("trust proxy", true);
-
+app.enable("trust proxy");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(
