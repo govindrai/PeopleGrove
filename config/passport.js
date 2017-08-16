@@ -23,8 +23,6 @@ passport.use(
       profileFields: ["id", "displayName", "email"]
     },
     function(accessToken, refreshToken, profile, done) {
-      console.log("MADE IT TO FACEOOK Strategy");
-      console.log(profile);
       const { id: facebookId, email, name } = profile._json;
       User.findOne({ facebookId })
         .then(user => {

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose"),
-  bcrypt = require("bcrypt");
+  bcrypt = require("bcrypt"),
+  Todo = require("./Todo");
 
 const userSchema = new mongoose.Schema({
   email: {
@@ -54,6 +55,19 @@ userSchema.methods.verifyPassword = function(plaintextPassword) {
   } else {
     return false;
   }
+};
+
+userSchema.methods.getTodosForDate = function(date) {
+  const user = this,
+    lowerBound = date,
+    upperBound = new Date(lowerBound);
+
+  upperBound.setDate(upperBound.getDate() + 1);
+
+  return Todo.find({ user: user._id })
+    .where("createdAt")
+    .gt(lowerBound)
+    .lt(upperBound);
 };
 
 const User = mongoose.model("User", userSchema);

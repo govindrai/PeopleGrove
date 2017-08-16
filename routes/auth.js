@@ -26,8 +26,10 @@ router.get(
 );
 
 router.get("/logout", function(req, res) {
+  const redirectPath = req.user.admin ? "/admin" : "/";
   req.session = null;
-  res.send("");
+  req.logout();
+  res.redirect(redirectPath);
 });
 
 router.post("/admin", (req, res, next) => {

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 
 export default class Header extends Component {
   render() {
@@ -9,7 +8,7 @@ export default class Header extends Component {
       if (!this.props.loggedIn || !this.props.admin) {
         authSection = <AdminLoginForm {...this.props} />;
       } else {
-        authSection = <button>Admin Logout Button (non functional)</button>;
+        authSection = <a href="/auth/logout">Admin Logout</a>;
       }
     } else {
       authSection = <FacebookAuthButton {...this.props} />;
@@ -21,6 +20,16 @@ export default class Header extends Component {
         {authSection}
       </div>
     );
+  }
+}
+
+class FacebookAuthButton extends Component {
+  render() {
+    if (this.props.loggedIn) {
+      return <a href="/auth/logout">Logout</a>;
+    } else {
+      return <a href="/auth/facebook">Login with Facebook</a>;
+    }
   }
 }
 
@@ -42,34 +51,28 @@ class AdminLoginForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    switch (this.props.loggedIn) {
-      case true:
-        logoutUser(this.props);
-        break;
-      default:
-        const { email, password } = this.state;
-        fetch("/auth/admin", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ email, password })
-        })
-          .then(res => res.json())
-          .then(user => {
-            if (user.admin) {
-              this.props.authHandler({ user, loggedIn: true, admin: true });
-              return this.history.push("/admin");
-            } else {
-              this.setState({ adminSigninError: "Incorrect email/password" });
-            }
-          })
-          .catch(e => {
-            console.log(e);
-          });
-        return;
-    }
+    const { email, password } = this.state;
+    fetch("/auth/admin", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    })
+      .then(res => res.json())
+      .then(user => {
+        if (user.admin) {
+          this.props.authHandler({ user, loggedIn: true, admin: true });
+          return this.history.push("/admin");
+        } else {
+          this.setState({ adminSigninError: "Incorrect email/password" });
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    return;
   }
 
   render() {
@@ -103,46 +106,4 @@ class AdminLoginForm extends Component {
       </form>
     );
   }
-}
-
-class FacebookAuthButton extends Component {
-  constructor(props) {
-    super(props);
-    this.handleFacebookAuth = this.handleFacebookAuth.bind(this);
-  }
-
-  handleFacebookAuth() {
-    switch (this.props.loggedIn) {
-      case true:
-        logoutUser(this.props);
-        break;
-      default:
-        fetch("/auth/facebook", { credentials: "include" })
-          .then(res => {
-            console.log(res);
-            return res.json();
-          })
-          .then(user => {
-            this.props.authHandler({ loggedIn: true, user, admin: false });
-          })
-          .catch(e => console.log(e));
-    }
-  }
-
-  render() {
-    return (
-      <button type="submit" onClick={this.handleFacebookAuth}>
-        {this.props.loggedIn ? "Logout" : "Login with Facebook"}
-      </button>
-    );
-  }
-}
-
-// Private Functions
-
-function logoutUser(props) {
-  fetch("/auth/logout", { credentials: "include" }).then(() => {
-    props.authHandler({ user: null, admin: false, loggedIn: false });
-    return props.history.push("/");
-  });
 }

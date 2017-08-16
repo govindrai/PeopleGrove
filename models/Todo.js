@@ -9,4 +9,10 @@ const todoSchema = mongoose.Schema(
   { timestamps: {} }
 );
 
-module.exports = mongoose.model("Todo", todoSchema);
+todoSchema.statics.getTodos = () => {
+  return Todo.find().populate("user");
+};
+
+const Todo = mongoose.model("Todo", todoSchema);
+
+module.exports = Todo;
