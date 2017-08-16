@@ -33,15 +33,13 @@ export default class Header extends Component {
 class FacebookAuthButton extends Component {
   render() {
     if (this.props.loggedIn) {
-      return <LogoutButton />;
+      return <LogoutButton {...this.props} />;
     } else {
       return (
-        <div>
-          <a href="/auth/facebook" className="waves-effect waves-light btn">
-            <i className="material-icons left">account_circle</i>
-            Login with Facebook
-          </a>
-        </div>
+        <a href="/auth/facebook" className="waves-effect waves-light btn">
+          <i className="material-icons left">account_circle</i>
+          Login with Facebook
+        </a>
       );
     }
   }
@@ -49,10 +47,15 @@ class FacebookAuthButton extends Component {
 
 function LogoutButton(props) {
   return (
-    <a href="/auth/logout" className="waves-effect waves-light btn">
-      <i className="material-icons right">exit_to_app</i>
-      {props.admin ? "Admin Logout" : "Logout"}
-    </a>
+    <div>
+      <span className="username">
+        {props.user.email}
+      </span>
+      <a href="/auth/logout" className="waves-effect waves-light btn">
+        <i className="material-icons right">exit_to_app</i>
+        {props.admin ? "Admin Logout" : "Logout"}
+      </a>
+    </div>
   );
 }
 

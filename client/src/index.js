@@ -3,9 +3,9 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Header from "./components/Header";
-import TodosIndex from "./components/todos/index";
-import TodosNew from "./components/todos/new";
-import TodosEdit from "./components/todos/edit";
+import TodosIndex from "./components/todos/TodosIndex";
+import TodosNew from "./components/todos/TodosNew";
+import TodosEdit from "./components/todos/TodosEdit";
 import Admin from "./components/Admin";
 import Footer from "./components/Footer";
 
@@ -38,7 +38,6 @@ class App extends Component {
   }
 
   render() {
-    console.log("App is rerendering");
     return (
       <Router>
         <div>
