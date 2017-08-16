@@ -34,22 +34,13 @@ router.get("/logout", function(req, res) {
 });
 
 // login admin
-router.post("/admin", (req, res, next) => {
-  passport.authenticate("local", function(err, user, info) {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return res.json({});
-    }
-    req.logIn(user, function(err) {
-      if (err) {
-        return next(err);
-      }
-      return res.json(user);
-    });
-  })(req, res, next);
-});
+router.post(
+  "/admin",
+  passport.authenticate("local", {
+    failureRedirect: "/admin?login=failed",
+    successRedirect: "/admin"
+  })
+);
 
 // get info of current user
 router.get("/userInfo", (req, res) => {

@@ -61,10 +61,9 @@ class AdminLoginForm extends Component {
     super(props);
     this.state = {
       email: "",
-      password: "",
-      adminSigninError: ""
+      password: ""
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
+
     this.handleFieldChange = this.handleFieldChange.bind(this);
   }
 
@@ -72,35 +71,9 @@ class AdminLoginForm extends Component {
     this.setState({ [event.target.name]: event.target.value });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
-    const { email, password } = this.state;
-    fetch("/auth/admin", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
-    })
-      .then(res => res.json())
-      .then(user => {
-        if (user.admin) {
-          this.props.authHandler({ user, loggedIn: true, admin: true });
-          return this.history.push("/admin");
-        } else {
-          this.setState({ adminSigninError: "Incorrect email/password" });
-        }
-      })
-      .catch(e => {
-        console.log(e);
-      });
-    return;
-  }
-
   render() {
     return (
-      <form onSubmit={this.handleSubmit} action="/auth/admin" method="post">
+      <form action="/auth/admin" method="post">
         <div id="loginForm" className="row valign-wrapper">
           <h5 className="col">Admin Login</h5>
           <div className="input-field col">
@@ -127,7 +100,8 @@ class AdminLoginForm extends Component {
           </div>
         </div>
         <div id="errorMessage">
-          {this.state.adminSigninError}
+          {this.props.history.location.search === "?login=failed" &&
+            "Incorrect username/password"}
         </div>
       </form>
     );
