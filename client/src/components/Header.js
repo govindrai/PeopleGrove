@@ -9,7 +9,7 @@ export default class Header extends Component {
       if (!this.props.loggedIn || !this.props.admin) {
         authSection = <AdminLoginForm {...this.props} />;
       } else {
-        authSection = <a href="/auth/logout">Admin Logout</a>;
+        authSection = <LogoutButton admin />;
       }
     } else {
       authSection = <FacebookAuthButton {...this.props} />;
@@ -17,12 +17,12 @@ export default class Header extends Component {
 
     return (
       <div className="row valign-wrapper">
-        <div className="col l6">
+        <div className="col l5">
           <Link to="/">
             <h1 className="teal-text darken-4">PeopleGrove Task Tracker</h1>
           </Link>
         </div>
-        <div className="col l6 right-align">
+        <div className="col l7 right-align">
           {authSection}
         </div>
       </div>
@@ -33,16 +33,27 @@ export default class Header extends Component {
 class FacebookAuthButton extends Component {
   render() {
     if (this.props.loggedIn) {
-      return (
-        <a href="/auth/logout" className="waves-effect waves-light btn">
-          <i className="material-icons right">exit_to_app</i>
-          Logout
-        </a>
-      );
+      return <LogoutButton />;
     } else {
-      return <a href="/auth/facebook">Login with Facebook</a>;
+      return (
+        <div>
+          <a href="/auth/facebook" className="waves-effect waves-light btn">
+            <i className="material-icons left">account_circle</i>
+            Login with Facebook
+          </a>
+        </div>
+      );
     }
   }
+}
+
+function LogoutButton(props) {
+  return (
+    <a href="/auth/logout" className="waves-effect waves-light btn">
+      <i className="material-icons right">exit_to_app</i>
+      {props.admin ? "Admin Logout" : "Logout"}
+    </a>
+  );
 }
 
 class AdminLoginForm extends Component {

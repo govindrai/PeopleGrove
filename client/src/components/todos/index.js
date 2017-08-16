@@ -51,15 +51,21 @@ export default class TodosIndex extends Component {
     if (this.props.loggedIn) {
       return (
         <div>
-          <Link
-            to="/todos/new"
-            className="btn-floating btn waves-effect waves-light teal lighten-3"
-          >
-            <i className="material-icons">add</i>Track Task
-          </Link>
-          <h3>
-            Date: {this.state.date.toLocaleDateString()}
-          </h3>
+          <div className="row valign-wrapper">
+            <div className="col l8">
+              <h3>
+                Date: {this.state.date.toLocaleDateString()}
+              </h3>
+            </div>
+            <div className="col l4 right-align">
+              <Link
+                to="/todos/new"
+                className="btn-floating btn waves-effect waves-light"
+              >
+                <i className="material-icons">add</i>Track Task
+              </Link>
+            </div>
+          </div>
           <table>
             <thead>
               <tr>
@@ -115,9 +121,12 @@ export default class TodosIndex extends Component {
 }
 
 function changeDateButton(onPressHandler, direction) {
+  let button = direction === "previous" ? "chevron_left" : "chevron_right";
   return (
-    <button name={direction} onClick={onPressHandler}>
-      {direction === "previous" ? "<" : ">"}
+    <button className="btn" name={direction} onClick={onPressHandler}>
+      <i className="material-icons">
+        {button}
+      </i>
     </button>
   );
 }

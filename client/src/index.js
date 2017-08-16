@@ -7,6 +7,7 @@ import TodosIndex from "./components/todos/index";
 import TodosNew from "./components/todos/new";
 import TodosEdit from "./components/todos/edit";
 import Admin from "./components/Admin";
+import Footer from "./components/Footer";
 
 class App extends Component {
   constructor(props) {
@@ -42,7 +43,6 @@ class App extends Component {
       <Router>
         <div>
           <Route
-            path="/"
             component={props =>
               <Header
                 {...props}
@@ -70,6 +70,7 @@ class App extends Component {
             />
             <Route component={() => <div>SORRY No PAGE with that url</div>} />
           </Switch>
+          <Route component={Footer} />
         </div>
       </Router>
     );

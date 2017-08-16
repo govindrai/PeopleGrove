@@ -55,29 +55,4 @@ export default class TodosEdit extends Component {
       />
     );
   }
-
-  // render() {
-  //   if (!this.props.loggedIn) {
-  //     return <NotFound />;
-  //   }
-  //   return (
-  //     <form onSubmit={this.onSubmitHandler}>
-  //       <label>Name of Activity: </label>
-  //       <input
-  //         name="name"
-  //         onChange={this.onChangeHandler}
-  //         type="text"
-  //         value={this.state.name}
-  //       />
-  //       <label>Duration of Activity: </label>
-  //       <input
-  //         name="duration"
-  //         onChange={this.onChangeHandler}
-  //         type="text"
-  //         value={this.state.duration}
-  //       />
-  //       <input type="submit" value="Edit Activity" />
-  //     </form>
-  //   );
-  // }
 }
