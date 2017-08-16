@@ -42,34 +42,38 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route
-            component={props =>
-              <Header
-                {...props}
-                authHandler={this.handleAuth}
-                {...this.state}
-              />}
-          />
-          <Switch>
+          <header>
             <Route
-              exact
-              path="/"
-              component={props => <TodosIndex {...props} {...this.state} />}
+              component={props =>
+                <Header
+                  {...props}
+                  authHandler={this.handleAuth}
+                  {...this.state}
+                />}
             />
-            <Route
-              path="/todos/new"
-              component={props => <TodosNew {...props} {...this.state} />}
-            />
-            <Route
-              path="/todos/edit/:id"
-              component={props => <TodosEdit {...props} {...this.state} />}
-            />
-            <Route
-              path="/admin"
-              component={props => <Admin {...props} {...this.state} />}
-            />
-            <Route component={() => <div>SORRY No PAGE with that url</div>} />
-          </Switch>
+          </header>
+          <main>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                component={props => <TodosIndex {...props} {...this.state} />}
+              />
+              <Route
+                path="/todos/new"
+                component={props => <TodosNew {...props} {...this.state} />}
+              />
+              <Route
+                path="/todos/edit/:id"
+                component={props => <TodosEdit {...props} {...this.state} />}
+              />
+              <Route
+                path="/admin"
+                component={props => <Admin {...props} {...this.state} />}
+              />
+              <Route component={() => <div>SORRY No PAGE with that url</div>} />
+            </Switch>
+          </main>
           <Route component={Footer} />
         </div>
       </Router>

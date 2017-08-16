@@ -30,7 +30,6 @@ export default class TodosIndex extends Component {
   }
 
   dateChangeHandler(event) {
-    event.preventDefault();
     let modifier;
     switch (event.target.name) {
       case "previous":
@@ -42,6 +41,7 @@ export default class TodosIndex extends Component {
       default:
         break;
     }
+
     const newDate = new Date(this.state.date);
     newDate.setDate(newDate.getDate() + modifier);
     this.fetchTodos(newDate);
@@ -66,19 +66,19 @@ export default class TodosIndex extends Component {
               </Link>
             </div>
           </div>
-          <table>
+          <table className="centered responsive-table highlight bordered">
             <thead>
               <tr>
-                <td>
+                <th>
                   {changeDateButton(this.dateChangeHandler, "previous")}
-                </td>
-                <td>Task Name</td>
-                <td>Time Spent</td>
-                <td>Task Created</td>
-                <td />
-                <td>
+                </th>
+                <th>Task Name</th>
+                <th>Time Spent</th>
+                <th>Task Created</th>
+                <th />
+                <th>
                   {changeDateButton(this.dateChangeHandler, "next")}
-                </td>
+                </th>
               </tr>
             </thead>
             <tbody>

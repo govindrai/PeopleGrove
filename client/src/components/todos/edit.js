@@ -25,7 +25,6 @@ export default class TodosEdit extends Component {
     event.preventDefault();
     const { name, duration } = this.state;
     const { id } = this.props.match.params;
-    console.log(name, duration);
     fetch(`/api/todos/edit/${id}`, {
       method: "put",
       headers: new Headers({

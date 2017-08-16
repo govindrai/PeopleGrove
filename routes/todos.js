@@ -25,7 +25,6 @@ router.get("/edit/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   const { body: { name, duration }, user } = req;
-  console.log(name, duration, user);
   Todo.create({ name, duration, user })
     .then(todo => {
       res.json(todo);

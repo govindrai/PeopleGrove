@@ -16,7 +16,7 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
-  "author": "Govind Rai & Vilde Vevatne",
+  "author": "Govind Rai",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^1.0.2",

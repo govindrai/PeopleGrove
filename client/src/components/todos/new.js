@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import FormPartial from "./FormPartial";
 
 export default class TodosNew extends Component {
