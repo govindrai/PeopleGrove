@@ -9,9 +9,7 @@ export default function FormPartial(props) {
   return (
     <form onSubmit={props.onSubmitHandler}>
       <div className="input-field">
-        <label className="active" htmlFor="name">
-          Name of Activity:{" "}
-        </label>
+        <label htmlFor="name">Name of Activity: </label>
         <input
           id="name"
           className="input-field"
@@ -22,9 +20,7 @@ export default function FormPartial(props) {
         />
       </div>
       <div className="input-field">
-        <label className="active" htmlFor="duration">
-          Duration of Activity:{" "}
-        </label>
+        <label htmlFor="duration">Duration of Activity: </label>
         <input
           id="duration"
           name="duration"

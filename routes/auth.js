@@ -25,6 +25,7 @@ router.get(
   })
 );
 
+// logout out user
 router.get("/logout", function(req, res) {
   const redirectPath = req.user.admin ? "/admin" : "/";
   req.session = null;
@@ -32,6 +33,7 @@ router.get("/logout", function(req, res) {
   res.redirect(redirectPath);
 });
 
+// login admin
 router.post("/admin", (req, res, next) => {
   passport.authenticate("local", function(err, user, info) {
     if (err) {
@@ -49,6 +51,7 @@ router.post("/admin", (req, res, next) => {
   })(req, res, next);
 });
 
+// get info of current user
 router.get("/userInfo", (req, res) => {
   if (req.user) {
     const { email, admin } = req.user;
@@ -58,6 +61,7 @@ router.get("/userInfo", (req, res) => {
   }
 });
 
+// create an test admin account
 router.get("/createAdmin", (req, res) => {
   User.create({
     name: "Adam Saven",

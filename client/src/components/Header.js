@@ -17,12 +17,12 @@ export default class Header extends Component {
 
     return (
       <div className="row valign-wrapper">
-        <div className="col l5">
+        <div className="col s12 m6 l4">
           <Link to="/">
             <h1 className="teal-text darken-4">PeopleGrove Task Tracker</h1>
           </Link>
         </div>
-        <div className="col l7 right-align">
+        <div className="col s12 m6 l8 right-align">
           {authSection}
         </div>
       </div>
@@ -101,30 +101,33 @@ class AdminLoginForm extends Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit} action="/auth/admin" method="post">
-        <h1>Admin Login</h1>
-        <div>
-          <h3>
-            {this.state.adminSigninError}
-          </h3>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={this.state.email}
-            onChange={this.handleFieldChange}
-          />
+        <div id="loginForm" className="row valign-wrapper">
+          <h5 className="col">Admin Login</h5>
+          <div className="input-field col">
+            <label htmlFor="email">Email:</label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={this.state.email}
+              onChange={this.handleFieldChange}
+            />
+          </div>
+          <div className="input-field col">
+            <label>Password:</label>
+            <input
+              type="password"
+              name="password"
+              value={this.state.password}
+              onChange={this.handleFieldChange}
+            />
+          </div>
+          <div className="col">
+            <input className="btn" type="submit" value="Log In" />
+          </div>
         </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={this.state.password}
-            onChange={this.handleFieldChange}
-          />
-        </div>
-        <div>
-          <input type="submit" value="Log In" />
+        <div id="errorMessage">
+          {this.state.adminSigninError}
         </div>
       </form>
     );

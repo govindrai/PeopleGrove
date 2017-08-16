@@ -33,6 +33,7 @@ const userSchema = new mongoose.Schema({
   }
 });
 
+// prior to saving a user, hash their password
 userSchema.pre("save", function(next) {
   const user = this;
   bcrypt.hash(user.password, 10).then(hash => {
@@ -41,13 +42,14 @@ userSchema.pre("save", function(next) {
   });
 });
 
+// verify user password
 userSchema.methods.verifyPassword = function(plaintextPassword) {
   const user = this;
   if (user.password) {
     return bcrypt
       .compare(plaintextPassword, user.password)
-      .then(res => {
-        return user;
+      .then(isMatch => {
+        return isMatch ? user : false;
       })
       .catch(e => {
         console.log(e);
