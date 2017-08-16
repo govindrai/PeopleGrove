@@ -51,7 +51,12 @@ export default class Admin extends Component {
         </table>
       );
     } else {
-      return null;
+      return (
+        <img
+          src="/images/macbookpro_admin.png"
+          alt="macbookpro with admin page snapshot"
+        />
+      );
     }
   }
 }

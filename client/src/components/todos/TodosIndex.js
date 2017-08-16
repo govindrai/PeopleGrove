@@ -116,7 +116,12 @@ export default class TodosIndex extends Component {
         </div>
       );
     } else {
-      return <div />;
+      return (
+        <img
+          src="/images/macbookpro.png"
+          alt="macbook pro displaying main app page"
+        />
+      );
     }
   }
 }

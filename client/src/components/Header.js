@@ -9,7 +9,7 @@ export default class Header extends Component {
       if (!this.props.loggedIn || !this.props.admin) {
         authSection = <AdminLoginForm {...this.props} />;
       } else {
-        authSection = <LogoutButton admin />;
+        authSection = <LogoutButton admin {...this.props} />;
       }
     } else {
       authSection = <FacebookAuthButton {...this.props} />;
