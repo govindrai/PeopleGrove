@@ -31,7 +31,7 @@ export default class TodosIndex extends Component {
 
   dateChangeHandler(event) {
     let modifier;
-    switch (event.target.name) {
+    switch (event.currentTarget.name) {
       case "previous":
         modifier = -1;
         break;
@@ -43,6 +43,7 @@ export default class TodosIndex extends Component {
     }
 
     const newDate = new Date(this.state.date);
+    console.log(newDate);
     newDate.setDate(newDate.getDate() + modifier);
     this.fetchTodos(newDate);
   }
