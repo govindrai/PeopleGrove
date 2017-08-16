@@ -20,7 +20,8 @@ passport.use(
       clientID: FACEBOOK_APP_ID,
       clientSecret: FACEBOOK_APP_SECRET,
       callbackURL: "/auth/facebook/callback",
-      profileFields: ["id", "displayName", "email"]
+      profileFields: ["id", "displayName", "email"],
+      proxy: true
     },
     function(accessToken, refreshToken, profile, done) {
       const { id: facebookId, email, name } = profile._json;
