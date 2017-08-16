@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import NotFound from "../NotFound";
 
 export default class TodosNew extends Component {
@@ -46,21 +47,45 @@ export default class TodosNew extends Component {
         <h1>
           {this.state.user.email}
         </h1>
-        <label>Name of Activity: </label>
-        <input
-          name="name"
-          onChange={this.onChangeHandler}
-          type="text"
-          value={this.state.name}
-        />
-        <label>Duration of Activity: </label>
-        <input
-          name="duration"
-          onChange={this.onChangeHandler}
-          type="text"
-          value={this.state.duration}
-        />
-        <input type="submit" value="Track Time" />
+        <div className="input-field">
+          <input
+            id="name"
+            className="input-field"
+            name="name"
+            onChange={this.onChangeHandler}
+            type="text"
+            value={this.state.name}
+          />
+          <label className="active" for="name">
+            Name of Activity:{" "}
+          </label>
+        </div>
+        <div className="input-field">
+          <label className="active" for="duration">
+            Duration of Activity:{" "}
+          </label>
+          <input
+            id="duration"
+            name="duration"
+            onChange={this.onChangeHandler}
+            type="text"
+            value={this.state.duration}
+          />
+        </div>
+        <button
+          type="submit"
+          value="Track Time"
+          className="left waves-effect waves-light btn"
+        >
+          Track Time
+          <i className="material-icons left">access_time</i>
+        </button>
+        <Link
+          className="right waves-effect waves-light btn teal lighten-2 class"
+          to="/"
+        >
+          Cancel<i className="material-icons left">cancel</i>
+        </Link>
       </form>
     );
   }

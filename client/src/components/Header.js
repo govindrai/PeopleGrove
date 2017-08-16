@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class Header extends Component {
   render() {
@@ -15,9 +16,15 @@ export default class Header extends Component {
     }
 
     return (
-      <div>
-        <h1>PeopleGrove Task Tracker</h1>
-        {authSection}
+      <div className="row valign-wrapper">
+        <div className="col l6">
+          <Link to="/">
+            <h1 className="teal-text darken-4">PeopleGrove Task Tracker</h1>
+          </Link>
+        </div>
+        <div className="col l6 right-align">
+          {authSection}
+        </div>
       </div>
     );
   }
@@ -26,7 +33,12 @@ export default class Header extends Component {
 class FacebookAuthButton extends Component {
   render() {
     if (this.props.loggedIn) {
-      return <a href="/auth/logout">Logout</a>;
+      return (
+        <a href="/auth/logout" className="waves-effect waves-light btn">
+          <i className="material-icons right">exit_to_app</i>
+          Logout
+        </a>
+      );
     } else {
       return <a href="/auth/facebook">Login with Facebook</a>;
     }

@@ -51,7 +51,12 @@ export default class TodosIndex extends Component {
     if (this.props.loggedIn) {
       return (
         <div>
-          <Link to="/todos/new">Track Task</Link>
+          <Link
+            to="/todos/new"
+            className="btn-floating btn waves-effect waves-light teal lighten-3"
+          >
+            <i className="material-icons">add</i>Track Task
+          </Link>
           <h3>
             Date: {this.state.date.toLocaleDateString()}
           </h3>
