@@ -19,10 +19,10 @@ router.get(
 // authentication has failed.
 router.get(
   "/facebook/callback",
-  passport.authenticate("facebook"),
-  (req, res) => {
-    res.json(req.user);
-  }
+  passport.authenticate("facebook", {
+    successRedirect: "/",
+    failureRedirect: "/"
+  })
 );
 
 router.get("/logout", function(req, res) {

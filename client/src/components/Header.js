@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export default class Header extends Component {
   render() {
@@ -116,8 +117,9 @@ class FacebookAuthButton extends Component {
         logoutUser(this.props);
         break;
       default:
-        fetch("/auth/facebook", { credentials: "include", mode: "no-cors" })
+        fetch("/auth/facebook", { credentials: "include" })
           .then(res => {
+            console.log(res);
             return res.json();
           })
           .then(user => {

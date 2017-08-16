@@ -19,7 +19,6 @@ export default class TodosIndex extends Component {
 
   componentDidMount() {
     if (this.props.loggedIn) {
-      console.log("loggedIn so fetching Todos");
       this.fetchTodos(this.state.date);
     }
   }
@@ -91,7 +90,7 @@ export default class TodosIndex extends Component {
                       {todo.duration}
                     </td>
                     <td>
-                      {createdAt.toLocaleString()}
+                      {createdAt.toLocaleDateString()}
                     </td>
                     <td>
                       {Edit}
