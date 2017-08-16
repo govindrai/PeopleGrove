@@ -24,10 +24,10 @@ Admin Portal
 
 
 ## Technology Notes ##
-Uses React functional components to manage state throughout the app
-Uses Mongoose.js ODM to query MongoDB
-All API and authentication endpoints have been built on Express.js
-bCrypt has been implemented to hash and compare passwords for local auth
+- Uses React functional components to manage state throughout the app
+- Uses Mongoose.js ODM to query MongoDB
+- All API and authentication endpoints have been built on Express.js
+- bCrypt has been implemented to hash and compare passwords for local auth
 
 
 ## Technologies Implemented ##
