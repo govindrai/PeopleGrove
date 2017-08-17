@@ -5,7 +5,7 @@
 Live now at [peoplegroveapp.herokuapp.com](https://peoplegroveapp.herokuapp.com)
 
 ## Description ##
-A simple task tracker that let's you track time spent on activities.
+A simple task tracker that lets you track time spent on activities.
 
 
 ## Usage ##
