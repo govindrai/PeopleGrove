@@ -14,7 +14,7 @@ export default function Footer(props) {
     <footer className="page-footer">
       <div className="footer-copyright">
         <div className="container">
-          © 2017 Copyright Govind Rai
+          © 2017 Copyright Govind Rai & Vilde Vevatne
           <Link to={to} className="grey-text text-lighten-4 right">
             {text}
           </Link>
