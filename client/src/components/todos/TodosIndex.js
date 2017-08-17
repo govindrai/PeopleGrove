@@ -117,11 +117,13 @@ export default class TodosIndex extends Component {
       );
     } else {
       return (
-        <img
-          className="responsive-img"
-          src="/images/macbookpro.png"
-          alt="macbook pro displaying main app page"
-        />
+        <div className="center-align">
+          <img
+            className="responsive-img"
+            src="/images/macbookpro.png"
+            alt="macbook pro displaying main app page"
+          />
+        </div>
       );
     }
   }

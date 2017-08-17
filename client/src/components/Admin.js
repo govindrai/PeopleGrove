@@ -52,11 +52,13 @@ export default class Admin extends Component {
       );
     } else {
       return (
-        <img
-          className="responsive-img"
-          src="/images/macbookpro_admin.png"
-          alt="macbookpro with admin page snapshot"
-        />
+        <div className="center-align">
+          <img
+            className="responsive-img"
+            src="/images/macbookpro_admin.png"
+            alt="macbookpro with admin page snapshot"
+          />
+        </div>
       );
     }
   }
