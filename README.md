@@ -1,6 +1,6 @@
 # PeopleGrove Task Tracker #
 
-<img src="https://peoplegroveapp.herokuapp.com/images/macbookpro.png" />
+<img src="https://github.com/govindrai/PeopleGrove/blob/master/client/public/images/macbookpro.png?raw=true" />
 
 Live now at [peoplegroveapp.herokuapp.com](https://peoplegroveapp.herokuapp.com)
 
